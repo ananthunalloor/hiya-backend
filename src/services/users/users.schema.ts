@@ -1,8 +1,8 @@
 // // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
-import { resolve } from '@feathersjs/schema'
-import { Type, getValidator, querySyntax } from '@feathersjs/typebox'
-import type { Static } from '@feathersjs/typebox'
 import { passwordHash } from '@feathersjs/authentication-local'
+import { resolve } from '@feathersjs/schema'
+import type { Static } from '@feathersjs/typebox'
+import { Type, getValidator, querySyntax } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
@@ -59,7 +59,7 @@ export type UserQuery = Static<typeof userQuerySchema>
 export const userQueryValidator = getValidator(userQuerySchema, queryValidator)
 export const userQueryResolver = resolve<UserQuery, HookContext>({
   // If there is a user (e.g. with authentication), they are only allowed to see their own data
-  id: async (value, user, context) => {
+  id: async (value, _user, context) => {
     if (context.params.user) {
       return context.params.user.id
     }
