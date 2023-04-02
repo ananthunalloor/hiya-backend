@@ -1,16 +1,16 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/application.html
-import { feathers } from '@feathersjs/feathers'
 import configuration from '@feathersjs/configuration'
-import { koa, rest, bodyParser, errorHandler, parseAuthentication, cors, serveStatic } from '@feathersjs/koa'
+import { feathers } from '@feathersjs/feathers'
+import { bodyParser, cors, errorHandler, koa, parseAuthentication, rest, serveStatic } from '@feathersjs/koa'
 import socketio from '@feathersjs/socketio'
 
+import { authentication } from './authentication'
+import { channels } from './channels'
 import { configurationValidator } from './configuration'
 import type { Application } from './declarations'
 import { logError } from './hooks/log-error'
-import { sqlite } from './sqlite'
-import { authentication } from './authentication'
 import { services } from './services/index'
-import { channels } from './channels'
+import { sqlite } from './sqlite'
 
 const app: Application = koa(feathers())
 
@@ -29,7 +29,7 @@ app.configure(rest())
 app.configure(
   socketio({
     cors: {
-      origin: app.get('origins')
+      origin: '*' //app.get('origins')
     }
   })
 )
